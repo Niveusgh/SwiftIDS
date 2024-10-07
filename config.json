@@ -1,0 +1,53 @@
+{
+  "network": {
+    "interface": "en0",
+    "packet_capture": {
+      "promiscuous_mode": true,
+      "snapshot_length": 65535,
+      "timeout_ms": 1000
+    }
+  },
+  "log_monitoring": {
+    "system_log_path": "/var/log/system.log",
+    "scan_interval_seconds": 5
+  },
+  "detection_rules": {
+    "network": [
+      {
+        "name": "Large Packet",
+        "condition": "packet_size > 1000",
+        "alert": true
+      },
+      {
+        "name": "Port Scan",
+        "condition": "unique_ports > 10 in 5 seconds",
+        "alert": true
+      }
+    ],
+    "log": [
+      {
+        "name": "Failed Login",
+        "pattern": "Failed login attempt",
+        "alert": true
+      },
+      {
+        "name": "Unauthorized Access",
+        "pattern": "Unauthorized access attempt",
+        "alert": true
+      }
+    ]
+  },
+  "alerting": {
+    "console_output": true,
+    "log_file": "/var/log/swiftids_alerts.log",
+    "email": {
+      "enabled": false,
+      "smtp_server": "smtp.example.com",
+      "smtp_port": 587,
+      "username": "your_username",
+      "password": "your_password",
+      "from_address": "alerts@yourdomain.com",
+      "to_address": "admin@yourdomain.com"
+    }
+  }
+}
